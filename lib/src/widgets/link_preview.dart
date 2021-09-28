@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' show PreviewData;
-import 'package:flutter_linkify/flutter_linkify.dart' hide UrlLinkifier;
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:linkify/linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../url_linkifier.dart' show UrlLinkifier;
+import '../url_linkifier.dart' as custom_linkifier;
 import '../utils.dart' show getPreviewData;
 
 /// A widget that renders text with highlighted links.
@@ -307,7 +308,11 @@ class _LinkPreviewState extends State<LinkPreview>
 
   Widget _linkify() {
     return SelectableLinkify(
-      linkifiers: [const EmailLinkifier(), UrlLinkifier()],
+      linkifiers: [
+        const EmailLinkifier(),
+        const UserTagLinkifier(),
+        custom_linkifier.UrlLinkifier(),
+      ],
       linkStyle: widget.linkStyle,
       maxLines: 100,
       minLines: 1,
