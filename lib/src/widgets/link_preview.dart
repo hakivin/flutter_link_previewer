@@ -165,8 +165,7 @@ class _LinkPreviewState extends State<LinkPreview>
   }
 
   bool _hasData(PreviewData? previewData) {
-    return previewData?.title != null ||
-        previewData?.description != null ||
+    return (previewData?.title != null && previewData?.description != null) ||
         previewData?.image?.url != null;
   }
 
