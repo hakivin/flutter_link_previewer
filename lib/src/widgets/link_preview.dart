@@ -4,7 +4,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:linkify/linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../url_linkifier.dart' as custom_linkifier;
-import '../utils.dart' show getPreviewData;
+import '../utils.dart' show getPreviewData, StrExtension;
 
 /// A widget that renders text with highlighted links.
 /// Eventually unwraps to the full preview of the first found link
@@ -165,8 +165,12 @@ class _LinkPreviewState extends State<LinkPreview>
   }
 
   bool _hasData(PreviewData? previewData) {
-    return (previewData?.title != null && previewData?.description != null) ||
-        previewData?.image?.url != null;
+    if (previewData != null) {
+      return (!previewData.title.isNullOrBlank() && !previewData.description.isNullOrBlank()) ||
+          previewData.image?.url != null;
+    } else {
+      return false;
+    }
   }
 
   bool _hasOnlyImage() {

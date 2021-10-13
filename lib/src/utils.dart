@@ -252,6 +252,22 @@ Future<PreviewData> getPreviewData(String text, {String? proxy}) async {
   }
 }
 
+extension StrExtension on String? {
+  bool isNullOrEmpty() {
+    if (this == null) return true;
+    if (this!.isEmpty) return true;
+    return false;
+  }
+
+  bool isNullOrBlank() {
+    if (this == null) {
+      return true;
+    } else {
+      return this!.trim().isEmpty;
+    }
+  }
+}
+
 /// Regex to check if text is email
 const regexEmail = r'([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)';
 
