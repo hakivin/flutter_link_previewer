@@ -266,6 +266,13 @@ extension StrExtension on String? {
       return this!.trim().isEmpty;
     }
   }
+
+  bool isDigit() {
+    if (this == null) {
+      return false;
+    }
+    return int.tryParse(this!) != null;
+  }
 }
 
 /// Regex to check if text is email

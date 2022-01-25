@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' show PreviewData;
+import 'package:flutter_link_previewer/src/object_linkifier.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:linkify/linkify.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +32,7 @@ class LinkPreview extends StatefulWidget {
     required this.text,
     this.textStyle,
     required this.width,
+    this.prefixes,
   }) : super(key: key);
 
   /// Expand animation duration
@@ -87,6 +89,9 @@ class LinkPreview extends StatefulWidget {
 
   /// Width of the [LinkPreview] widget
   final double width;
+
+  /// Letter prefix for regex parsing
+  final List<String>? prefixes;
 
   @override
   _LinkPreviewState createState() => _LinkPreviewState();
@@ -309,13 +314,24 @@ class _LinkPreviewState extends State<LinkPreview>
     );
   }
 
+  List<Linkifier> _buildLinkifiers() {
+    List<Linkifier> _linkifiers = [
+      const EmailLinkifier(),
+      const UserTagLinkifier(),
+      custom_linkifier.UrlLinkifier(),
+    ];
+    if (widget.prefixes != null) {
+      for (String element in widget.prefixes!) {
+        _linkifiers.add(ObjectLinkifier(element));
+      }
+    }
+
+    return _linkifiers;
+  }
+
   Widget _linkify() {
     return SelectableLinkify(
-      linkifiers: [
-        const EmailLinkifier(),
-        const UserTagLinkifier(),
-        custom_linkifier.UrlLinkifier(),
-      ],
+      linkifiers: _buildLinkifiers(),
       linkStyle: widget.linkStyle,
       maxLines: 100,
       minLines: 1,

@@ -31,7 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<String> get urls => const [
         'https://flyer.chat',
-        'github.com/flyerhq',
+        'github.com/flyerhq @hakivin',
+        'T12345 E12345 T123abc E123abc Tan123',
       ];
 
   @override
@@ -68,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   });
                 },
                 previewData: datas[urls[index]],
+                prefixes: const ['E', 'T'],
                 text: urls[index],
                 width: MediaQuery.of(context).size.width,
               ),
